@@ -12,13 +12,12 @@ library("logr")
 # SETTING UP ARGPARSER #
 ########################
 
-parser <- ArgumentParser(description = "attempt for a minimalistic script to rarefy otu data")
+parser <- ArgumentParser(description = "minimalistic script to parse atlas GC per KEGG pathway, KEGG module, GO terms\n 
+					Normalize to cpm \n
+					Aggregate cpm per sample")
+
 parser$add_argument("--input", type = "character", required = TRUE, 
-                    help = "Path OTU Count Matrix. TAXA ARE ROWS")
-parser$add_argument("--metadata", type = "character", required = TRUE, 
-                    help = "Path metadata")
-parser$add_argument("--tax", type = "character", required = TRUE, 
-                    help = "Path Tax table")
+                    help = "Path to atlas directory")
 
 # aarse the command line arguments
 args <- parser$parse_args()
