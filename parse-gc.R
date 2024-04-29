@@ -6,6 +6,7 @@ library("httr")
 library("readr")
 library("arrow")
 library("dplyr")
+library("stringr")
 library("logr")
 
 #######################
