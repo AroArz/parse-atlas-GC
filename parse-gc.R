@@ -73,11 +73,11 @@ sample_coverage_stats = read.csv(sample_coverage_stats_path, sep = "\t", row.nam
 sep("getting unique pathways, modules, GO's etc ...")
 ## Get unique pathways, modules, GOs etc...
 eggnogGC_KEGGpwy = extractUniqueColValues(eggnogGC, "KEGG_Pathway")
-eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset((grepl("map", eggnogGC_KEGGpwy$identifier)))
+eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset((grepl("map", eggnogGC_KEGGpwy$unique_values)))
 
 write.csv(paste(GC_output_path, "test_kegg_pwy.csv", sep = ""), eggnogGC_KEGGpwy)
 
-eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset("map00540" %in% identifier)
+eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset("map00540" %in% unique_values)
 
 #eggnogGC_KEGGmodule = extractUniqueColValues(eggnogGC, "KEGG_Module")
 #eggnogGC_GO = extractUniqueColValues(eggnogGC, "GO_terms")
@@ -98,7 +98,7 @@ names(total_coverage) <- rownames(sample_coverage_stats)
 
 
 sep("generating KEGG pathway data")
-for (ID in unique(eggnogGC_KEGGpwy$identifier)) {
+for (ID in unique(eggnogGC_KEGGpwy$unique_values)) {
     
     
     

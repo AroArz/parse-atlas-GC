@@ -113,7 +113,7 @@ extractUniqueColValues <- function(df, column_name) {
   unique_values <- unique(unlist(split_values))
   
   # Return a dataframe of unique values
-  return(data.frame(identifier))
+  return(data.frame(unique_values))
 }
 
 filterByValue <- function(df, column_name, search_string) {
