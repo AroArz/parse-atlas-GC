@@ -37,8 +37,6 @@ lf = log_open(logfile)
 options("logr.compact" = TRUE)
 options("logr.notes" = FALSE)
 put(paste("user provided input: ", input_arg, sep = ""))
-put(paste("user provided metadata: ", metadata_arg, sep = ""))
-put(paste("user provided taxtable: ", tax_arg, sep = ""))
 options("logr.notes" = TRUE)
 
 #####################
