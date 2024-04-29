@@ -83,7 +83,7 @@ process_anno <- function(genecatalog, abund_file_path, total_coverage, column, q
     print(query)
     
     put("getting query genelist\n")
-    query_genelist = getQueries(geneputalog, column, query)
+    query_genelist = getQueries(genecatalog, column, query)
     
     put("loading cpm data for query\n")
     query_count_subset = load_subset_of_genes(abund_file_path, query_genelist)
