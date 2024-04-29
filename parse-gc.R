@@ -78,7 +78,7 @@ eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset((grepl("map", eggnogGC_KEGGpwy$un
 write.csv(eggnogGC_KEGGpwy, 
           paste(GC_output_path, "/test_kegg_pwy.csv", sep = ""))
 
-eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset("map00540" %in% unique_values)
+eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset("map00540" %in% eggnogGC_KEGGpwy$unique_values)
 
 #eggnogGC_KEGGmodule = extractUniqueColValues(eggnogGC, "KEGG_Module")
 #eggnogGC_GO = extractUniqueColValues(eggnogGC, "GO_terms")
