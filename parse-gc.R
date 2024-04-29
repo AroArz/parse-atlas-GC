@@ -6,7 +6,6 @@ library("httr")
 library("readr")
 library("arrow")
 library("dplyr")
-library("stringr")
 library("logr")
 
 #######################
@@ -71,18 +70,30 @@ gene_coverage_stats = read_parquet(gene_coverage_stats_path)
 sample_coverage_stats = read.csv(sample_coverage_stats_path, sep = "\t", row.names = "X")
 
 
+####################
+# GETTING UNIQUE PATHWAYS; MODULES; GO'S
+##################
+
+
 sep("getting unique pathways, modules, GO's etc ...")
 ## Get unique pathways, modules, GOs etc...
 eggnogGC_KEGGpwy = extractUniqueColValues(eggnogGC, "KEGG_Pathway")
 eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset((grepl("map", eggnogGC_KEGGpwy$unique_values)))
 
 write.csv(eggnogGC_KEGGpwy, 
-          paste(GC_output_path, "/test_kegg_pwy.csv", sep = ""))
-
-eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset(eggnogGC_KEGGpwy$unique_values %in% "map00540")
+          paste(KEGG_pathway_output_path, "/eggnogGC_KEGGpwy.csv", sep = ""))
 
 #eggnogGC_KEGGmodule = extractUniqueColValues(eggnogGC, "KEGG_Module")
+#eggnogGC_KEGGmodule = eggnogGC_KEGGmodule %>% subset(!(unique_values %in% c("KEGG_Module", "-")))
+
+#write.csv(eggnogGC_KEGGmodule, 
+#          paste(KEGG_module_output_path, "/eggnogGC_KEGGmodule.csv", sep = ""))
+
 #eggnogGC_GO = extractUniqueColValues(eggnogGC, "GO_terms")
+#eggnogGC_GO = eggnogGC_GO %>% subset(!(unique_values %in% c("GOs", "-")))
+
+#write.csv(eggnogGC_GO, 
+#          paste(GO_terms_output_path, "/eggnogGC_GO.csv", sep = ""))
 
 
 sep("setting up variables ...")
@@ -109,8 +120,46 @@ for (ID in unique(eggnogGC_KEGGpwy$unique_values)) {
     
     ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Pathway", paste(ID))
     
+    cat_msg = paste("saving: ", ID, sep = "")
+    put(cat_msg)
+    
     write.csv(ID_summarised,
               paste(KEGG_pathway_output_path, "/", ID, ".csv", sep = ""))
     
-    
 }
+
+#sep("generating KEGG module data")
+#for (ID in unique(eggnogGC_KEGGmodule$unique_values)) {
+#    
+#    
+#    
+#    cat_msg = paste("summarising KEGG MODULE: ", ID, sep = "")
+#    put(cat_msg)
+#    
+#    ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Module", paste(ID))
+#    
+#    cat_msg = paste("saving: ", ID, sep = "")
+#    put(cat_msg)
+#    
+#    write.csv(ID_summarised,
+#              paste(KEGG_module_output_path, "/", ID, ".csv", sep = ""))
+#    
+#}
+#
+#sep("generating GO TERMS data")
+#for (ID in unique(eggnogGC_GO$unique_values)) {
+#    
+#    
+#    
+#    cat_msg = paste("summarising GO TERM: ", ID, sep = "")
+#    put(cat_msg)
+#    
+#    ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "GO_terms", paste(ID))
+#    
+#    cat_msg = paste("saving: ", ID, sep = "")
+#    put(cat_msg)
+#    
+#    write.csv(ID_summarised,
+#              paste(GO_terms_output_path, "/", ID, ".csv", sep = ""))
+#    
+#}
