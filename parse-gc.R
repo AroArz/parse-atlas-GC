@@ -54,3 +54,14 @@ source("scripts/parse-gc-functions.R")
 GC_output_path = "output/GC/"
 check_dirs(GC_output_path)
 
+## Read Input Files
+abundance_file_path = paste(input_arg, "/Genecatalog/counts/median_coverage.h5")
+eggnogGC_path = paste(input_arg, "/Genecatalog/annotations/eggNOG.parquet")
+gene_coverage_stats_path = paste(input_arg, "/Genecatalog/counts/gene_coverage_stats.parquet")
+sample_coverage_stats_path = paste(input_arg, "/Genecatalog/counts/sample_coverage_stats.tsv")
+
+eggnogGC = read_parquet(eggnogGC_path)
+gene_coverage_stats = read_parquet(gene_coverage_stats_path)
+sample_coverage_stats = read.csv(sample_coverage_stats_path, sep = "\t", row.names = "X")
+
+
