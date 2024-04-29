@@ -57,6 +57,7 @@ check_dirs(KEGG_pathway_output_path)
 check_dirs(KEGG_module_output_path)
 check_dirs(GO_terms_output_path)
 
+sep("loading input files")
 
 ## Read Input Files
 abundance_file_path = paste(input_arg, "/Genecatalog/counts/median_coverage.h5", sep = "")
@@ -68,6 +69,8 @@ eggnogGC = read_parquet(eggnogGC_path)
 gene_coverage_stats = read_parquet(gene_coverage_stats_path)
 sample_coverage_stats = read.csv(sample_coverage_stats_path, sep = "\t", row.names = "X")
 
+
+sep("getting unique pathways, modules, GO's etc ...")
 ## Get unique pathways, modules, GOs etc...
 eggnogGC_KEGGpwy = extractUniqueColValues(eggnogGC, "KEGG_Pathway")
 eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset((grepl("map", eggnogGC_KEGGpwy$ID)))
@@ -79,6 +82,8 @@ eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset("map00540" %in% ID)
 #eggnogGC_KEGGmodule = extractUniqueColValues(eggnogGC, "KEGG_Module")
 #eggnogGC_GO = extractUniqueColValues(eggnogGC, "GO_terms")
 
+
+sep("setting up variables ...")
 ## setting up variables
 h5overview <- rhdf5::h5ls(abundance_file_path)
 dim <- h5overview[1, "dim"] %>%
@@ -92,7 +97,11 @@ total_coverage <- sample_coverage_stats[, "Sum_coverage"]
 names(total_coverage) <- rownames(sample_coverage_stats)
 
 
+sep("generating KEGG pathway data")
 for (ID in unique(eggnogGC_KEGGpwy$ID)) {
+    
+    cat_msg = paste("summarising KEGG PATHWAY: ", ID, sep = "")
+    put(cat_msg)
     
     ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Pathway", ID)
     
