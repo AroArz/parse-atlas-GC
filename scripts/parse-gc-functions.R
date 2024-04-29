@@ -82,16 +82,16 @@ process_anno <- function(genecatalog, abund_file_path, total_coverage, column, q
     
     print(query)
     
-    cat("getting query genelist\n")
-    query_genelist = getQueries(genecatalog, column, query)
+    put("getting query genelist\n")
+    query_genelist = getQueries(geneputalog, column, query)
     
-    cat("loading cpm data for query\n")
+    put("loading cpm data for query\n")
     query_count_subset = load_subset_of_genes(abund_file_path, query_genelist)
     
-    cat("normalizing cpm data for query\n")
+    put("normalizing cpm data for query\n")
     query_cpm_subset_norm = normalize_subset(query_count_subset, total_coverage)
     
-    cat("grouping normalized cpm data for query per sample\n")
+    put("grouping normalized cpm data for query per sample\n")
     query_cpm_norm_grouped = group_anno_by_sample(query_cpm_subset_norm, query)
     
     return(query_cpm_norm_grouped)
