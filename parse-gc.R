@@ -77,7 +77,7 @@ eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset((grepl("map", eggnogGC_KEGGpwy$ID
 
 write.csv(paste(GC_output_path, "test_kegg_pwy.csv", sep = ""), eggnogGC_KEGGpwy)
 
-eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset("map00540" %in% ID)
+eggnogGC_KEGGpwy = eggnogGC_KEGGpwy %>% subset("map00540" %in% identifier)
 
 #eggnogGC_KEGGmodule = extractUniqueColValues(eggnogGC, "KEGG_Module")
 #eggnogGC_GO = extractUniqueColValues(eggnogGC, "GO_terms")
@@ -98,12 +98,14 @@ names(total_coverage) <- rownames(sample_coverage_stats)
 
 
 sep("generating KEGG pathway data")
-for (ID in unique(eggnogGC_KEGGpwy$ID)) {
+for (ID in unique(eggnogGC_KEGGpwy$identifier)) {
+    
+    
     
     cat_msg = paste("summarising KEGG PATHWAY: ", ID, sep = "")
     put(cat_msg)
     
-    ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Pathway", ID)
+    ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Pathway", paste(ID))
     
     write.csv(paste(KEGG_pathway_output_path, ID, sep = ""), ID_summarised)
     
