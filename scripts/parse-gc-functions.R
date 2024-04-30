@@ -85,6 +85,12 @@ process_anno <- function(genecatalog, abund_file_path, total_coverage, column, q
     put("getting query genelist\n")
     query_genelist = getQueries(genecatalog, column, query)
     
+    # cutoff
+    if (length(query_genelist) > 100000) {  # skip pathway if ngenes > 100000
+        put(paste("Skipping large pathway with ", length(query_genelist), " genes: ", query, "\n"))
+        return(NULL)
+    }
+    
     put("loading cpm data for query\n")
     query_count_subset = load_subset_of_genes(abund_file_path, query_genelist)
     

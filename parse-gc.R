@@ -121,11 +121,20 @@ for (ID in unique(eggnogGC_KEGGpwy$unique_values)) {
     
     ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Pathway", paste(ID))
     
-    cat_msg = paste("saving: ", ID, sep = "")
-    put(cat_msg)
-    
-    write.csv(ID_summarised,
-              paste(KEGG_pathway_output_path, "/", ID, ".csv", sep = ""))
+    if (!is.null(ID_summarised)) {
+        
+        cat_msg = paste("saving: ", ID, sep = "")
+        put(cat_msg)
+
+        write.csv(ID_summarised,
+                  paste(KEGG_pathway_output_path, "/", ID, ".csv", sep = "")
+                 )
+        
+    } else {
+        
+        put(paste("No data to save for: ", ID, "\n"))
+        
+    }
     
 }
 
