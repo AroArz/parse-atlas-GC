@@ -41,7 +41,9 @@ getQueries <- function(genecatalog, column, query) {
 
 # helper function to load subset of genes from hdf5 file
 load_subset_of_genes <- function(abundance_file, indexes_of_genes_to_load) {
-  put("Load ", length(indexes_of_genes_to_load), " genes\n")
+    
+  put_msg = paste("Load ", length(indexes_of_genes_to_load), " genes\n", sep = "")
+  put(put_msg)
 
 
   data <- rhdf5::h5read(
