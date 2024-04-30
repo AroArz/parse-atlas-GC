@@ -80,8 +80,6 @@ group_anno_by_sample <- function(normalized_cpm, anno) {
 
 process_anno <- function(genecatalog, abund_file_path, total_coverage, column, query) {
     
-    print(query)
-    
     put("getting query genelist\n")
     query_genelist = getQueries(genecatalog, column, query)
     
