@@ -114,83 +114,99 @@ names(total_coverage) <- rownames(sample_coverage_stats)
 #sep("generating KEGG pathway data")
 #for (ID in unique(eggnogGC_KEGGpwy$unique_values)) {
 #    
+#    ID_path = paste(KEGG_pathway_output_path, "/", ID, ".csv", sep = "")
 #    
-#    
-#    cat_msg = paste("summarising KEGG PATHWAY: ", ID, sep = "")
-#    put(cat_msg)
-#    
-#    ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Pathway", paste(ID))
-#    
-#    if (!is.null(ID_summarised)) {
+#    if (file.exists(ID_path)) {
 #        
-#        cat_msg = paste("saving: ", ID, sep = "")
-#        put(cat_msg)
-#
-#        write.csv(ID_summarised,
-#                  paste(KEGG_pathway_output_path, "/", ID, ".csv", sep = "")
-#                 )
+#        log_msg = paste("skipping KEGG PATHWAY: ", ID, ", file already exists", sep = "")
+#        put(log_msg)
 #        
 #    } else {
-#        
-#        put(paste("No data to save for: ", ID, "\n"))
-#        
-#    }
 #    
+#        cat_msg = paste("summarising KEGG PATHWAY: ", ID, sep = "")
+#        put(cat_msg)
+#        
+#        ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Pathway", paste(ID))
+#        
+#        if (!is.null(ID_summarised)) {
+#            
+#            cat_msg = paste("saving: ", ID, sep = "")
+#            put(cat_msg)
+#
+#            write.csv(ID_summarised, ID_path)
+#            
+#        } else {
+#            
+#            put(paste("No data to save for: ", ID, "\n"))
+#            
+#        }
+#    }
 #}
 
 
 sep("generating KEGG module data")
 for (ID in unique(eggnogGC_KEGGmodule$unique_values)) {
     
+    ID_path = paste(KEGG_module_output_path, "/", ID, ".csv", sep = "")
     
-    
-    cat_msg = paste("summarising KEGG MODULE: ", ID, sep = "")
-    put(cat_msg)
-    
-    ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Module", paste(ID))
-    
-    if (!is.null(ID_summarised)) {
+    if (file.exists(ID_path)) {
         
-        cat_msg = paste("saving: ", ID, sep = "")
-        put(cat_msg)
-
-        write.csv(ID_summarised,
-                  paste(KEGG_module_output_path, "/", ID, ".csv", sep = "")
-                 )
+        log_msg = paste("skipping KEGG MODULE: ", ID, ", file already exists", sep = "")
+        put(log_msg)
         
     } else {
-        
-        put(paste("No data to save for: ", ID, "\n"))
-        
-    }
     
+        cat_msg = paste("summarising KEGG MODULE: ", ID, sep = "")
+        put(cat_msg)
+        
+        ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "KEGG_Module", paste(ID))
+        
+        if (!is.null(ID_summarised)) {
+            
+            cat_msg = paste("saving: ", ID, sep = "")
+            put(cat_msg)
+
+            write.csv(ID_summarised, ID_path)
+            
+        } else {
+            
+            put(paste("No data to save for: ", ID, "\n"))
+            
+        }
+    }
 }
+
+
 
 sep("generating GO TERMS data")
 for (ID in unique(eggnogGC_GO$unique_values)) {
     
+    sub_ID = gsub(":", "_", ID)
+    ID_path = paste(GO_terms_output_path, "/", sub_ID, ".csv", sep = "")
     
-    
-    cat_msg = paste("summarising GO TERM: ", ID, sep = "")
-    put(cat_msg)
-    
-    ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "GO_terms", paste(ID))
-    
-    if (!is.null(ID_summarised)) {
+    if (file.exists(ID_path)) {
         
-        cat_msg = paste("saving: ", ID, sep = "")
-        put(cat_msg)
-        
-        ID = gsub(":", "_", ID)
-
-        write.csv(ID_summarised,
-                  paste(GO_terms_output_path, "/", ID, ".csv", sep = "")
-                 )
+        log_msg = paste("skipping GO TERM: ", ID, ", file already exists", sep = "")
+        put(log_msg)
         
     } else {
-        
-        put(paste("No data to save for: ", ID, "\n"))
-        
-    }
     
+        cat_msg = paste("summarising GO TERM: ", ID, sep = "")
+        put(cat_msg)
+        
+        ID_summarised = process_anno(eggnogGC, abundance_file_path, total_coverage, "GO_terms", paste(ID))
+        
+        if (!is.null(ID_summarised)) {
+            
+            cat_msg = paste("saving: ", ID, sep = "")
+            put(cat_msg)
+
+            write.csv(ID_summarised, ID_path)
+            
+        } else {
+            
+            put(paste("No data to save for: ", ID, "\n"))
+            
+        }
+    }
 }
